@@ -14,6 +14,7 @@
 #'
 #' @export
 
+
 RGP_open_conn <- function(address=Sys.getenv("RGP_ADDRESS"),
                           user=Sys.getenv("RGP_USER"),
                           password=Sys.getenv("RGP_PASS"),
