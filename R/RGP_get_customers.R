@@ -4,15 +4,18 @@
 #' facilities obtained via a call to RGP_get_gyms. If multiple codes are
 #' submitted, then this will loop over all locations and concatenate the results
 #'
-#' @param address URL of the RGP server
 #' @param user username of database on RGP server
 #' @param pass password of 'user'
-#' @param db_name database name of RGP server
+#' @param RGP_locations output from a previous call to RGP_locations
+#' @param return_all TRUE/FALSE whether to return all columns
 #'
-#' @return dbRGP
+#' @return all_customers a tibble
 #'
 #' @importFrom DBI dbConnect
 #' @importFrom RMySQL MySQL
+#' @import magrittr
+#' @importFrom dplyr tbl select filter
+#' @importFrom tibble as_tibble
 #'
 #' @export
 
