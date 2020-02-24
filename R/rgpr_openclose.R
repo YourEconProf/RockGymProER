@@ -58,7 +58,7 @@ RGP_close_conn <- function(dbRGP){
 #'
 #' @param dbRGP connection handle from open_RGP_conn
 #'
-#' @return RGP_sites a tibble of information on the RGP sites
+#' @return RGP_sites is a list of information about the install
 #'
 #' @importFrom DBI dbConnect
 #' @importFrom RMySQL MySQL
@@ -67,7 +67,20 @@ RGP_close_conn <- function(dbRGP){
 #'
 #' @export
 
-RGP_get_gyms <- function(dbRGP){
+RGP_Connection_Details <- function(address=Sys.getenv("RGP_ADDRESS"),
+                                   user=Sys.getenv("RGP_USER"),
+                                   password=Sys.getenv("RGP_PASS"),
+                                   db_name=Sys.getenv("RGP_DATABASE")){
+  if (is.null(address))
+    stop("ERROR: open_RGP_conn is missing address.")
+  if (is.null(user))
+    stop("ERROR: open_RGP_conn is missing user")
+  if (is.null(password))
+    stop("ERROR: open_RGP_conn is missing password")
+  if (is.null(db_name))
+    stop("ERROR: open_RGP_conn is missing db_name")
+
+  # Start Output Structure
 
   rgp_databases  <- tbl(dbRGP,"remote_databases") %>%
     select(HOST,DBNAME,TAG) %>%
