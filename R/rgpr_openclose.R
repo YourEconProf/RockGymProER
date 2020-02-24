@@ -66,7 +66,7 @@ RGP_close_conn <- function(dbRGP){
 #'
 #' @export
 
-RGP_Connection_Details <- function(address=Sys.getenv("RGP_ADDRESS"),
+RGP_Locations <- function(address=Sys.getenv("RGP_ADDRESS"),
                                    user=Sys.getenv("RGP_USER"),
                                    password=Sys.getenv("RGP_PASS"),
                                    db_name=Sys.getenv("RGP_DATABASE")){
@@ -79,14 +79,18 @@ RGP_Connection_Details <- function(address=Sys.getenv("RGP_ADDRESS"),
   if (is.null(db_name))
     stop("ERROR: open_RGP_conn is missing db_name")
 
-  # Start Output Structure
+  # Open connection to db:
+  RGPconn <- RGP_open_conn(address, user, password, db_name)
 
   rgp_databases  <- tbl(dbRGP,"remote_databases") %>%
     select(HOST,DBNAME,TAG) %>%
     collect() %>%
     as_tibble()
 
+  RGP_close_conn(dbRGP)
+
   return(rgp_databases)
+
 
 }
 
