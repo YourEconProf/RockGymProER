@@ -32,7 +32,7 @@ RGP_get_customers <- function(user=Sys.getenv("RGP_USER"),
   for (location_tag in RGP_db_tags){
     # Open database connection
     this_location <- RGP_locations %>%
-      filter(TAG=location_tag)
+      filter(TAG==location_tag)
 
     RGPconn <- RGP_open_conn(address=this_location$HOST,
                              user,
@@ -45,12 +45,12 @@ RGP_get_customers <- function(user=Sys.getenv("RGP_USER"),
       as_tibble()
 
     customers$GUID <- customers$GUID %>%
-      tidyr::replace_na(paste0(location_tag,"-",CUSTOMER_ID))
+      tidyr::replace_na(paste0(location_tag,"-",customers$CUSTOMER_ID))
 
     all_customers <- all_customers %>%
       rbind(customers)
 
-    RGP_close_conn(dbRGP)
+    RGP_close_conn(RGPconn)
 
   }
 

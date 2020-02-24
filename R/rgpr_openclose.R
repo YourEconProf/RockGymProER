@@ -70,17 +70,13 @@ RGP_Locations <- function(address=Sys.getenv("RGP_ADDRESS"),
                                    user=Sys.getenv("RGP_USER"),
                                    password=Sys.getenv("RGP_PASS"),
                                    db_name=Sys.getenv("RGP_DATABASE")){
-  if (is.null(address))
-    stop("ERROR: open_RGP_conn is missing address.")
   if (is.null(user))
     stop("ERROR: open_RGP_conn is missing user")
   if (is.null(password))
     stop("ERROR: open_RGP_conn is missing password")
-  if (is.null(db_name))
-    stop("ERROR: open_RGP_conn is missing db_name")
 
   # Open connection to db:
-  RGPconn <- RGP_open_conn(address, user, password, db_name)
+  dbRGP <- RGP_open_conn(address, user, password, db_name)
 
   rgp_databases  <- tbl(dbRGP,"remote_databases") %>%
     select(HOST,DBNAME,TAG) %>%
