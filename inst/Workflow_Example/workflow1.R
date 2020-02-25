@@ -19,3 +19,8 @@ customers_all_locations_all <- RGPr_get_customers(all_dbs, return_all = T)
 
 #------ For my next trick, get check-in data
 checkins                    <- RGPr_get_checkins(dplyr::filter(all_dbs,all_dbs$TAG=="VTC"))
+checkins_1                  <- RGPr_get_checkins(dplyr::filter(all_dbs,all_dbs$TAG=="VTC"),return_all = T)
+checkins_2                  <- RGPr_get_checkins(dplyr::filter(all_dbs,all_dbs$TAG=="VTC"),return_all = T,
+                                                 start_date = "2018-01-10", end_date = "2018-12-31")
+checkins_3                  <- RGPr_get_checkins(all_dbs,return_all = T,
+                                                 start_date = "2018-01-10", end_date = "2018-12-31")
