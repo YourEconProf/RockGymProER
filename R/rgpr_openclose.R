@@ -57,7 +57,7 @@ RGPr_close_conn <- function(dbRGP){
 #'
 #' @param dbRGP connection handle from open_RGP_conn
 #'
-#' @return RGP_sites a tibble of information on the RGP sites
+#' @return RGP_sites is a list of information about the install
 #'
 #' @importFrom DBI dbConnect
 #' @importFrom RMySQL MySQL
@@ -66,11 +66,28 @@ RGPr_close_conn <- function(dbRGP){
 #'
 #' @export
 
+<<<<<<< HEAD
 RGPr_Import_Gyms <- function(filename){
+=======
+RGP_Locations <- function(address=Sys.getenv("RGP_ADDRESS"),
+                                   user=Sys.getenv("RGP_USER"),
+                                   password=Sys.getenv("RGP_PASS"),
+                                   db_name=Sys.getenv("RGP_DATABASE")){
+  if (is.null(user))
+    stop("ERROR: open_RGP_conn is missing user")
+  if (is.null(password))
+    stop("ERROR: open_RGP_conn is missing password")
+
+  # Open connection to db:
+  dbRGP <- RGP_open_conn(address, user, password, db_name)
+>>>>>>> d3606302c74f3fbbe86b7d0d5d628bcd601822de
 
   rgp_databases  <- read_csv(filename,col_names = TRUE)
 
+  RGP_close_conn(dbRGP)
+
   return(rgp_databases)
+
 
 }
 
