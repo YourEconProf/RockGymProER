@@ -18,3 +18,4 @@ customers_all_locations     <- RGPr_get_customers(all_dbs)
 customers_all_locations_all <- RGPr_get_customers(all_dbs, return_all = T)
 
 #------ For my next trick, get check-in data
+checkins                    <- RGPr_get_checkins(dplyr::filter(all_dbs,all_dbs$TAG=="VTC"))
