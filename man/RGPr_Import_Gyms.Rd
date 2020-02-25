@@ -10,7 +10,7 @@ RGPr_Import_Gyms(filename)
 \item{dbRGP}{connection handle from open_RGP_conn}
 }
 \value{
-RGP_sites a tibble of information on the RGP sites
+RGP_sites is a list of information about the install
 }
 \description{
 User supplies one dbRGP handle, and retrieves information for other RGP locations

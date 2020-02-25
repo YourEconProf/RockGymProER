@@ -53,25 +53,25 @@ RGPr_close_conn <- function(dbRGP){
 
 #' Retrieves list of all facilities
 #'
-#' User supplies one dbRGP handle, and retrieves information for other RGP locations
+#' Imports information about each RGP install from a user-supplied csv file of the form
+#' # First, you'll need to supply a file of gym database info in csv format
+#' like this:
 #'
-#' @param dbRGP connection handle from open_RGP_conn
+#' TAG , ADDRESS          , USER  ,    PASSWORD    , DBNAME ,      X     ,   Y
+#' VAO , rgpdb.domain.com ,  bob  ,  bobs-password ,  va513 ,  -82.994614, 40.098792
+#' VTC , 192.168.1.3      ,   bob ,  bobs-password ,  vatc  ,   -82.994928, 40.094341
+#'
+#' @param filename connection handle from open_RGP_conn
 #'
 #' @return RGP_sites is a list of information about the install
 #'
-#' @importFrom DBI dbConnect
-#' @importFrom RMySQL MySQL
-#'
-#' @import     dplyr
 #'
 #' @export
 
 
 RGPr_Import_Gyms <- function(filename){
 
-  rgp_databases  <- read_csv(filename,col_names = TRUE)
-
-  RGP_close_conn(dbRGP)
+  rgp_databases  <- readr::read_csv(filename,col_names = TRUE)
 
   return(rgp_databases)
 
