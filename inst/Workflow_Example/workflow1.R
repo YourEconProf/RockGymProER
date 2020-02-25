@@ -12,6 +12,9 @@ usethis::use_pipe()
 all_dbs <- RGPr_Import_Gyms('~/R/RGP Analysis/dbinfo.csv')
 
 #------ Now, get customer data:
-customers <- RGPr_get_customers(dplyr::filter(all_dbs,all_dbs$TAG=="VTC"))
-customers_all <-RGPr_get_customers(dplyr::filter(all_dbs,all_dbs$TAG=="VTC"),return_all = T)
+customers                   <- RGPr_get_customers(dplyr::filter(all_dbs,all_dbs$TAG=="VTC"))
+customers_all               <- RGPr_get_customers(dplyr::filter(all_dbs,all_dbs$TAG=="VTC"),return_all = T)
+customers_all_locations     <- RGPr_get_customers(all_dbs)
+customers_all_locations_all <- RGPr_get_customers(all_dbs, return_all = T)
 
+#------ For my next trick, get check-in data

@@ -37,14 +37,14 @@ RGPr_get_customers <- function(RGP_databases,return_all=FALSE)
     if (return_all){
       customers <- tbl(RGPconn,"customers") %>%
         collect() %>%
-        mutate(FACILITY=location_tag) %>%
+        mutate(FACILITY=location_tag,CUSTOMER_ID=paste0(location_tag,"-",CUSTOMER_ID)) %>%
         as_tibble()
     } else {
       customers <- tbl(RGPconn,"customers") %>%
         select(CUSTOMER_ID, FIRSTNAME, LASTNAME, CUSTOMER_TYPE, ADDRESS1, CITY,
                STATE, CURRENT_STATUS, GUID, CUSTOMER_TYPE) %>%
         collect() %>%
-        mutate(FACILITY=location_tag) %>%
+        mutate(FACILITY=location_tag,CUSTOMER_ID=paste0(location_tag,"-",CUSTOMER_ID)) %>%
         as_tibble()
     }
 
