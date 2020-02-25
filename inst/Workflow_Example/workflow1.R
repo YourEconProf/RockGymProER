@@ -7,3 +7,5 @@
 # VTC    ,  192.168.1.3 ,        bob ,  bobs-password ,  vatc ,   -82.994928, 40.094341
 
 all_dbs <- RGPr_Import_Gyms('~/R/RGP Analysis/dbinfo.csv')
+
+
