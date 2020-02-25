@@ -14,10 +14,10 @@
 #'
 #' @export
 
-RGP_open_conn <- function(address=Sys.getenv("RGP_ADDRESS"),
-                          user=Sys.getenv("RGP_USER"),
-                          password=Sys.getenv("RGP_PASS"),
-                          db_name=Sys.getenv("RGP_DATABASE")){
+RGPr_open_conn <- function(address=NULL,
+                          user=NULL,
+                          password=NULL,
+                          db_name=NULL){
   if (is.null(address))
     stop("ERROR: open_RGP_conn is missing address.")
   if (is.null(user))
@@ -47,7 +47,7 @@ RGP_open_conn <- function(address=Sys.getenv("RGP_ADDRESS"),
 #'
 #' @export
 
-RGP_close_conn <- function(dbRGP){
+RGPr_close_conn <- function(dbRGP){
   dbRGP <- DBI::dbDisconnect(dbRGP)
 }
 
@@ -66,12 +66,9 @@ RGP_close_conn <- function(dbRGP){
 #'
 #' @export
 
-RGP_get_gyms <- function(dbRGP){
+RGPr_Import_Gyms <- function(filename){
 
-  rgp_databases  <- tbl(dbRGP,"remote_databases") %>%
-    select(HOST,DBNAME,TAG) %>%
-    collect() %>%
-    as_tibble()
+  rgp_databases  <- read_csv(filename,col_names = TRUE)
 
   return(rgp_databases)
 
