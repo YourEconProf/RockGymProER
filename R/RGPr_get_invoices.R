@@ -1,4 +1,4 @@
-#' Get Customer Data
+#' Get Invoices
 #'
 #' Gets primary data from customer data table using information on the
 #' facilities obtained via a call to RGP_get_gyms. If multiple codes are
@@ -14,17 +14,17 @@
 #' @importFrom DBI dbConnect
 #' @importFrom RMySQL MySQL
 #' @import magrittr
-#' @importFrom dplyr tbl select filter mutate collect left_join
+#' @importFrom dplyr tbl select filter mutate collect
 #' @importFrom tibble as_tibble
 #'
 #' @export
 
-RGPr_get_checkins <- function(RGP_databases,start_date=NULL,end_date=NULL, return_all=FALSE)
+RGPr_get_invoices <- function(RGP_databases,start_date=NULL,end_date=NULL, return_all=FALSE)
 {
 
   RGP_db_tags <- RGP_databases$TAG
 
-  all_checkins <- as_tibble()
+  all_invoices <- as_tibble()
 
   if (is.null(start_date)) start_date = "1901-01-01"
   if (is.null(end_date))   end_date   = Sys.time()
@@ -40,31 +40,30 @@ RGPr_get_checkins <- function(RGP_databases,start_date=NULL,end_date=NULL, retur
                              db_name=this_location$DBNAME)
 
     if (return_all){
-      checkins <- tbl(RGPconn,"checkins") %>%
+      invoices <- tbl(RGPconn,"invoices") %>%
         filter(POSTDATE>start_date, POSTDATE<end_date) %>%
         collect() %>%
         left_join(RGPr_customer_guid(RGPconn),by=c("CUSTOMER_ID")) %>%
         mutate(FACILITY=location_tag,CUSTOMER_ID=paste0(location_tag,"-",CUSTOMER_ID)) %>%
         as_tibble()
     } else {
-      checkins <- tbl(RGPconn,"checkins") %>%
+      invoices <- tbl(RGPconn,"invoices") %>%
         filter(POSTDATE>start_date, POSTDATE<end_date) %>%
-        select(CUSTOMER_ID, WHERE_DATABASE_TAG, REMOTE_DATABASE_TAG,
-               REMOTE_CUSTOMER_ID, REMOTE_CHECKIN_ID) %>%
+        select(CUSTOMER_ID, POSTDATE, AMOUNT, INVTYPE, FACILITY_ID, CUSTOMER_LOC) %>%
         collect() %>%
         left_join(RGPr_customer_guid(RGPconn),by=c("CUSTOMER_ID")) %>%
         mutate(FACILITY=location_tag,CUSTOMER_ID=paste0(location_tag,"-",CUSTOMER_ID)) %>%
         as_tibble()
     }
 
-    all_checkins <- all_checkins %>%
-      rbind(checkins)
+    all_invoices <- all_invoices %>%
+      rbind(invoices)
 
     RGPr_close_conn(RGPconn)
 
   }
 
- return(all_checkins)
+ return(all_invoices)
 
 }
 

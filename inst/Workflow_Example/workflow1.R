@@ -24,3 +24,6 @@ checkins_2                  <- RGPr_get_checkins(dplyr::filter(all_dbs,all_dbs$T
                                                  start_date = "2018-01-10", end_date = "2018-12-31")
 checkins_3                  <- RGPr_get_checkins(all_dbs,return_all = T,
                                                  start_date = "2018-01-10", end_date = "2018-12-31")
+
+#------ For my next trick, get retail spend
+invoices                    <- RGPr_get_checkins(dplyr::filter(all_dbs,all_dbs$TAG=="VTC"))

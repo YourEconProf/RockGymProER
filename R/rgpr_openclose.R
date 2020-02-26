@@ -27,7 +27,7 @@ RGPr_open_conn <- function(address=NULL,
   if (is.null(db_name))
     stop("ERROR: open_RGP_conn is missing db_name")
 
-  dbRGP <- DBI::dbConnect(drv=RMySQL::MySQL(),
+  dbRGP <- DBI::dbConnect(drv=RMariaDB::MariaDB(),
                           dbname=db_name,
                           username=user,
                           password=password,
